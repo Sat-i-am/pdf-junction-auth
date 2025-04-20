@@ -24,89 +24,130 @@ const styles = StyleSheet.create({
   },
   container: {
     border: "1pt solid black",
-    padding: 15,
-    margin: 10,
+    padding: 10,
   },
-  header: {
-    marginBottom: 15,
+  topText: {
     textAlign: "center",
-  },
-  headerTop: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 10,
-    fontSize: 8,
+    fontSize: 11,
+    marginBottom: 5,
+    fontWeight: "bold",
   },
   title: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "bold",
-    marginBottom: 5,
     textAlign: "center",
+    marginBottom: 5,
   },
   subtitle: {
-    fontSize: 10,
-    marginBottom: 3,
+    fontSize: 11,
     textAlign: "center",
+    marginBottom: 2,
   },
-  section: {
+  permitNumber: {
+    marginTop: 10,
     marginBottom: 10,
   },
-  sectionTitle: {
-    fontSize: 11,
-    fontWeight: "bold",
-    backgroundColor: "#f0f0f0",
-    padding: 3,
-    marginBottom: 5,
-  },
-  row: {
+  fieldRow: {
     flexDirection: "row",
-    marginBottom: 5,
-    borderBottom: "0.5pt dotted #000",
-    paddingBottom: 2,
+    marginBottom: 8,
+    alignItems: "flex-start",
   },
-  label: {
+  fieldNumber: {
+    width: 15,
+    marginRight: 5,
+  },
+  fieldContainer: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  fieldPair: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  fieldLabel: {
     width: "40%",
-    paddingRight: 5,
   },
-  value: {
-    width: "60%",
+  fieldValue: {
+    flex: 1,
+    borderBottom: "0.5pt dotted black",
+    minHeight: 14,
+    marginRight: 10,
+  },
+  fieldValueSmall: {
+    width: 100,
+    borderBottom: "0.5pt dotted black",
+    marginRight: 5,
+    minHeight: 14,
   },
   twoColumns: {
     flexDirection: "row",
     justifyContent: "space-between",
+    marginTop: 10,
+    borderTop: "1pt solid black",
+    paddingTop: 5,
+    width: "100%",
   },
   column: {
-    width: "48%",
+    width: "50%",
+    paddingHorizontal: 5,
+  },
+  columnTitle: {
+    fontSize: 11,
+    fontWeight: "bold",
+    marginBottom: 5,
+    textAlign: "center",
+    borderBottom: "0.5pt solid black",
+    paddingBottom: 2,
+    marginHorizontal: 5,
   },
   qrCode: {
     position: "absolute",
     top: 40,
     right: 40,
-    width: 80,
-    height: 80,
-    border: "1pt solid black",
+    width: 100,
+    height: 100,
   },
-  footer: {
-    marginTop: 20,
-    textAlign: "center",
+  originalCopy: {
+    position: "absolute",
+    top: 10,
+    left: 10,
+    fontSize: 10,
+  },
+  dateTime: {
+    position: "absolute",
+    top: 10,
+    right: 10,
     fontSize: 8,
-    borderTop: "1pt solid black",
-    paddingTop: 10,
-  }
+  },
 });
 
 const HindiDocument = ({ data }) => {
-  const renderField = (label, value) => (
-    <View style={styles.row}>
-      <Text style={styles.label}>{label}</Text>
-      <Text style={styles.value}>{value || "_____________"}</Text>
+  const renderPairedField = (number, label1, value1, label2, value2) => (
+    <View style={styles.fieldRow}>
+      <Text style={styles.fieldNumber}>{number}.</Text>
+      <View style={styles.fieldContainer}>
+        <View style={styles.fieldPair}>
+          <Text style={styles.fieldLabel}>{label1}</Text>
+          <Text style={styles.fieldValue}>{value1 || ""}</Text>
+        </View>
+        <View style={styles.fieldPair}>
+          <Text style={styles.fieldLabel}>{label2}</Text>
+          <Text style={styles.fieldValue}>{value2 || ""}</Text>
+        </View>
+      </View>
     </View>
   );
 
-  const renderSection = (title, fields) => (
-    <View style={styles.section}>
-      <Text style={styles.sectionTitle}>{title}</Text>
-      {fields.map(([label, value]) => renderField(label, value))}
+  const renderSingleField = (number, label, value) => (
+    <View style={styles.fieldRow}>
+      <Text style={styles.fieldNumber}>{number}.</Text>
+      <View style={styles.fieldContainer}>
+        <View style={styles.fieldPair}>
+          <Text style={styles.fieldLabel}>{label}</Text>
+          <Text style={styles.fieldValue}>{value || ""}</Text>
+        </View>
+      </View>
     </View>
   );
 
@@ -114,72 +155,80 @@ const HindiDocument = ({ data }) => {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.container}>
-          <View style={styles.headerTop}>
-            <Text>मूल प्रति</Text>
-            <Text>{data?.printDate} {data?.printTime}</Text>
+          <Text style={styles.originalCopy}>मूल प्रति</Text>
+          <Text style={styles.dateTime}>{data?.printDate} {data?.printTime}</Text>
+
+          <Text style={styles.topText}>"केवल राज्य के बाहर उपयोग हेतु"</Text>
+          <Text style={styles.title}>अनुज्ञा-पत्र</Text>
+          <Text style={styles.subtitle}>कृषि उपज मंडी समिति - Dabra</Text>
+          <Text style={styles.subtitle}>जिला - Gwalior</Text>
+          <Text style={styles.subtitle}>अधिनियम की धारा-19(6) तथा उपविधि 20(10)</Text>
+          <Text style={styles.subtitle}>(मूल मंडी क्षेत्र अथवा मंडी प्रांगण से माल बाहर ले जाने के लिये)</Text>
+
+          <View style={styles.permitNumber}>
+            <Text>अनुज्ञा-पत्र क्रमांक : {data?.permitNumber}</Text>
           </View>
 
-          <View style={styles.header}>
-            <Text style={styles.subtitle}>"केवल राज्य के बाहर उपयोग हेतु"</Text>
-            <Text style={styles.title}>अनुज्ञा-पत्र</Text>
-            <Text style={styles.subtitle}>कृषि उपज मंडी समिति - {data?.marketPlace}</Text>
-            <Text style={styles.subtitle}>जिला - {data?.marketDistrict}</Text>
-            <Text style={styles.subtitle}>अधिनियम की धारा-19(6) तथा उपविधि 20(10)</Text>
-            <Text style={styles.subtitle}>(मूल मंडी क्षेत्र अथवा मंडी प्रांगण से माल बाहर ले जाने के लिये)</Text>
+          {renderPairedField("1", "कृषि उपज का नाम", data?.cropName, "किस्म", data?.millQuality)}
+          {renderPairedField("2", "कृषि उपज की मात्रा-नग संख्या", data?.cropQuantityUnits, "कुल वजन(क्विंटल में)", data?.totalWeight)}
+          {renderSingleField("3", "कृषि उपज के स्वामी / विक्रेता का नाम :", data?.ownerName)}
+          {renderPairedField("4", "वाहन का प्रकार", data?.vehicleType, "वाहन क्रमांक", data?.vehicleNumber)}
+          {renderSingleField("5", "तौल कांटा का नाम एवं स्थान", data?.weighingStation)}
+          {renderSingleField("6", "तौल कांटा पर्ची नंबर", data?.weighingSlipNumber)}
+          {renderSingleField("7", "वाहन चालक का नाम", data?.driverName)}
+          {renderPairedField("8", "जमा की गई मंडी फीस / अनुज्ञापत्र का विवरण", data?.marketFeeDetails, "बाहर ले जाने का उद्देश्य :", data?.purposeOfTransport)}
+
+          <View style={styles.twoColumns}>
+            <View style={[styles.column, { borderRight: "0.5pt solid black" }]}>
+              <Text style={styles.columnTitle}>व्यापारी के लिये</Text>
+              {renderSingleField("", "अनुज्ञप्ति क्रमांक/मान नंबर", data?.licenseNumber)}
+              {renderSingleField("", "कृषि उपज का विवरण", data?.cropDetails)}
+              {renderSingleField("", "क्रय दिनांक", data?.purchaseDate)}
+              {renderSingleField("", "कुल क्रय मात्रा (क्विंटल में) :", data?.totalPurchaseQuantity)}
+            </View>
+            <View style={styles.column}>
+              <Text style={styles.columnTitle}>क्रेता के लिये</Text>
+              {renderSingleField("", "कुल लाई गई मात्रा", data?.totalBroughtQuantity)}
+              {renderSingleField("", "वापिस ले जाई गई मात्रा", data?.returnedQuantity)}
+              {renderSingleField("", "वापिस ले जाने का कारण", data?.returnReason)}
+              {renderSingleField("", "व्यापारी के पास इस अनुज्ञापत्र से निकासी के बाद शेष स्कंध वजन (क्विंटल में) :", data?.remainingStockWeight)}
+            </View>
+          </View>
+
+          <View style={{ marginTop: 10 }}>
+            <Text>क्रेता व्यापारी / फर्म / स्थान,जहाँ कृषि उपज (विक्रय/प्रोसेसिंग) के उद्देश्य से ले जायी जाती है का नाम :</Text>
+            <Text style={[styles.fieldValue, { marginTop: 5 }]}>{data?.buyerTraderName}</Text>
+            
+            <View style={{ flexDirection: "row", marginTop: 5 }}>
+              <View style={{ flex: 1 }}>
+                <Text>जी.एस.टी. पंजीयन क्रमांक</Text>
+                <Text style={styles.fieldValue}>{data?.gstNumber}</Text>
+              </View>
+              <View style={{ flex: 1, marginLeft: 10 }}>
+                <Text>मान नंबर</Text>
+                <Text style={styles.fieldValue}>{data?.buyerManNumber}</Text>
+              </View>
+            </View>
+
+            <View style={{ flexDirection: "row", marginTop: 5 }}>
+              <View style={{ flex: 1 }}>
+                <Text>मंडी समिति का जिला</Text>
+                <Text style={styles.fieldValue}>{data?.marketDistrict}</Text>
+              </View>
+              <View style={{ flex: 1, marginLeft: 10 }}>
+                <Text>मंडी समिति</Text>
+                <Text style={styles.fieldValue}>{data?.marketCommittee}</Text>
+              </View>
+            </View>
+
+            <View style={{ marginTop: 5 }}>
+              <Text>जिला/प्रदेश</Text>
+              <Text style={styles.fieldValue}>{data?.districtState}</Text>
+            </View>
           </View>
 
           <View style={styles.qrCode}>
             {/* QR Code placeholder */}
-          </View>
-
-          {renderSection("कृषि उपज की जानकारी", [
-            ["कृषि उपज का नाम", data?.cropName],
-            ["किस्म", data?.millQuality],
-            ["कृषि उपज की मात्रा", `${data?.cropQuantityUnits || ""} नग`],
-            ["कुल वजन", `${data?.totalWeight || ""} क्विंटल`],
-            ["कृषि उपज का विवरण", data?.cropDetails]
-          ])}
-
-          {renderSection("वाहन एवं तौल की जानकारी", [
-            ["वाहन का प्रकार", data?.vehicleType],
-            ["वाहन क्रमांक", data?.vehicleNumber],
-            ["वाहन चालक का नाम", data?.driverName],
-            ["तौल कांटा का नाम एवं स्थान", data?.weighingStation],
-            ["तौल कांटा पर्ची नंबर", data?.weighingSlipNumber]
-          ])}
-
-          <View style={styles.twoColumns}>
-            <View style={styles.column}>
-              {renderSection("क्रय विवरण", [
-                ["कुल लाई गई मात्रा", data?.totalBroughtQuantity],
-                ["वापस ले जाई गई मात्रा", data?.returnedQuantity],
-                ["क्रय दिनांक", data?.purchaseDate],
-                ["कुल क्रय मात्रा", data?.totalPurchaseQuantity],
-                ["शेष स्कंध वजन", data?.remainingStockWeight]
-              ])}
-            </View>
-            <View style={styles.column}>
-              {renderSection("मंडी विवरण", [
-                ["मंडी फीस विवरण", data?.marketFeeDetails],
-                ["बाहर ले जाने का उद्देश्य", data?.purposeOfTransport],
-                ["मंडी समिति", data?.marketCommittee],
-                ["जिला / प्रदेश", data?.districtState]
-              ])}
-            </View>
-          </View>
-
-          {renderSection("क्रेता की जानकारी", [
-            ["क्रेता व्यापारी का नाम", data?.buyerTraderName],
-            ["जी.एस.टी. पंजीयन क्रमांक", data?.gstNumber],
-            ["मान नंबर", data?.buyerManNumber],
-            ["गंतव्य स्थान", data?.destinationPlace],
-            ["डिलीवरी क्रेता व्यापारी", data?.deliveryTrader],
-            ["गंतव्य जी.एस.टी.", data?.destinationGST],
-            ["गंतव्य मान नंबर", data?.destinationManNumber]
-          ])}
-
-          <View style={styles.footer}>
-            <Text>यह कम्प्यूटर द्वारा जनरेट किया गया दस्तावेज है और इस पर हस्ताक्षर की आवश्यकता नहीं है।</Text>
           </View>
         </View>
       </Page>
