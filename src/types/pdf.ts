@@ -1,4 +1,3 @@
-
 export interface PDFDocument {
   id: string;
   userId: string;
@@ -37,6 +36,13 @@ export interface PDFDocument {
   address: string;
   date: string;
   content: string;
+  marketFeeDetails: string;
+  purposeOfTransport: string;
+  districtState: string;
+  destinationPlace: string;
+  deliveryTrader: string;
+  destinationGST: string;
+  destinationManNumber: string;
   createdAt: string;
   updatedAt: string;
 }

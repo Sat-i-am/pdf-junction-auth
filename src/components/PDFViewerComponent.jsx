@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Document,
   Page,
@@ -7,7 +7,6 @@ import {
   StyleSheet,
   Font,
   Image,
-  pdf,
 } from "@react-pdf/renderer";
 import { PDFViewer, PDFDownloadLink } from "@react-pdf/renderer";
 
@@ -16,93 +15,172 @@ Font.register({
   family: "Noto Sans Devanagari",
   src: "/fonts/NotoSansDevanagari-Regular.ttf",
 });
+
 const styles = StyleSheet.create({
   page: {
     padding: 20,
-    flexDirection: "column",
-    justifyContent: "space-between",
-  },
-  body: {
-    height: "70%",
-    margin: 20,
-    border: "1px solid black",
     fontFamily: "Noto Sans Devanagari",
+    fontSize: 10,
+  },
+  container: {
+    border: "1pt solid black",
+    padding: 15,
+    margin: 10,
+  },
+  header: {
+    marginBottom: 15,
+    textAlign: "center",
+  },
+  headerTop: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 10,
     fontSize: 8,
-  },
-  footer: {
-    justifyContent: "space-between",
-    flexDirection: "row",
-    alignItems: "center",
-    fontSize: 10,
-  },
-
-  navbar: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    fontSize: 10,
-  },
-  topSection: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    fontSize: 10,
   },
   title: {
     fontSize: 14,
-    margin: 5,
-    fontWeight: 400,
+    fontWeight: "bold",
+    marginBottom: 5,
+    textAlign: "center",
   },
-  middleSection: {
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
+  subtitle: {
     fontSize: 10,
+    marginBottom: 3,
+    textAlign: "center",
   },
-  boldLabel: { fontWeight: 600 },
+  section: {
+    marginBottom: 10,
+  },
+  sectionTitle: {
+    fontSize: 11,
+    fontWeight: "bold",
+    backgroundColor: "#f0f0f0",
+    padding: 3,
+    marginBottom: 5,
+  },
+  row: {
+    flexDirection: "row",
+    marginBottom: 5,
+    borderBottom: "0.5pt dotted #000",
+    paddingBottom: 2,
+  },
+  label: {
+    width: "40%",
+    paddingRight: 5,
+  },
+  value: {
+    width: "60%",
+  },
+  twoColumns: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  column: {
+    width: "48%",
+  },
+  qrCode: {
+    position: "absolute",
+    top: 40,
+    right: 40,
+    width: 80,
+    height: 80,
+    border: "1pt solid black",
+  },
+  footer: {
+    marginTop: 20,
+    textAlign: "center",
+    fontSize: 8,
+    borderTop: "1pt solid black",
+    paddingTop: 10,
+  }
 });
 
 const HindiDocument = ({ data }) => {
+  const renderField = (label, value) => (
+    <View style={styles.row}>
+      <Text style={styles.label}>{label}</Text>
+      <Text style={styles.value}>{value || "_____________"}</Text>
+    </View>
+  );
+
+  const renderSection = (title, fields) => (
+    <View style={styles.section}>
+      <Text style={styles.sectionTitle}>{title}</Text>
+      {fields.map(([label, value]) => renderField(label, value))}
+    </View>
+  );
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <View>
-          <View style={styles.navbar}>
-            <Text>{new Date().toLocaleString("en-IN")}</Text>
-            <Text>Anugya-Patra</Text>
-            <Text></Text>
+        <View style={styles.container}>
+          <View style={styles.headerTop}>
+            <Text>मूल प्रति</Text>
+            <Text>{data?.printDate} {data?.printTime}</Text>
           </View>
-          <View style={styles.body}>
-            <iv style={styles.topSection}>
-              <Text>मूल प्रति</Text>
-              
-              <View style={styles.middleSection}>
-                <Text>"केवल राज्य के बाहर उपयोग हेतु "</Text>
-                <Text style={styles.title}>अनुज्ञा-पत्र</Text>
-                <Text style={styles.boldLabel}>
-                  कृषि उपज मंडी समिति - {data?.marketPlace || "Dabra"}
-                </Text>
-                <Text style={styles.label}>
-                  जिला -{" "}
-                  <Text style={styles.boldLabel}>
-                    {data?.marketDistrict || "Gwalior"}
-                  </Text>
-                </Text>
-                <Text style={styles.label}>
-                  अधिनियम की धारा-19(6) तथा उपविधि 20(10)
-                </Text>
-                <Text style={styles.boldLabel}>
-                  (मूल मंडी क्षेत्र अथवा मंडी प्रांगण से माल बाहर ले जाने के
-                  लिये)
-                </Text>
-              </View>
-              <View></View>
-              {/* A Qr to be displayed  */}
+
+          <View style={styles.header}>
+            <Text style={styles.subtitle}>"केवल राज्य के बाहर उपयोग हेतु"</Text>
+            <Text style={styles.title}>अनुज्ञा-पत्र</Text>
+            <Text style={styles.subtitle}>कृषि उपज मंडी समिति - {data?.marketPlace}</Text>
+            <Text style={styles.subtitle}>जिला - {data?.marketDistrict}</Text>
+            <Text style={styles.subtitle}>अधिनियम की धारा-19(6) तथा उपविधि 20(10)</Text>
+            <Text style={styles.subtitle}>(मूल मंडी क्षेत्र अथवा मंडी प्रांगण से माल बाहर ले जाने के लिये)</Text>
+          </View>
+
+          <View style={styles.qrCode}>
+            {/* QR Code placeholder */}
+          </View>
+
+          {renderSection("कृषि उपज की जानकारी", [
+            ["कृषि उपज का नाम", data?.cropName],
+            ["किस्म", data?.millQuality],
+            ["कृषि उपज की मात्रा", `${data?.cropQuantityUnits || ""} नग`],
+            ["कुल वजन", `${data?.totalWeight || ""} क्विंटल`],
+            ["कृषि उपज का विवरण", data?.cropDetails]
+          ])}
+
+          {renderSection("वाहन एवं तौल की जानकारी", [
+            ["वाहन का प्रकार", data?.vehicleType],
+            ["वाहन क्रमांक", data?.vehicleNumber],
+            ["वाहन चालक का नाम", data?.driverName],
+            ["तौल कांटा का नाम एवं स्थान", data?.weighingStation],
+            ["तौल कांटा पर्ची नंबर", data?.weighingSlipNumber]
+          ])}
+
+          <View style={styles.twoColumns}>
+            <View style={styles.column}>
+              {renderSection("क्रय विवरण", [
+                ["कुल लाई गई मात्रा", data?.totalBroughtQuantity],
+                ["वापस ले जाई गई मात्रा", data?.returnedQuantity],
+                ["क्रय दिनांक", data?.purchaseDate],
+                ["कुल क्रय मात्रा", data?.totalPurchaseQuantity],
+                ["शेष स्कंध वजन", data?.remainingStockWeight]
+              ])}
+            </View>
+            <View style={styles.column}>
+              {renderSection("मंडी विवरण", [
+                ["मंडी फीस विवरण", data?.marketFeeDetails],
+                ["बाहर ले जाने का उद्देश्य", data?.purposeOfTransport],
+                ["मंडी समिति", data?.marketCommittee],
+                ["जिला / प्रदेश", data?.districtState]
+              ])}
             </View>
           </View>
-        </View>
-        <View style={styles.footer}>
-          <Text>https://eanugya.mp.gov.in/Trader.aspx </Text>
-          <Text>1/1</Text>
+
+          {renderSection("क्रेता की जानकारी", [
+            ["क्रेता व्यापारी का नाम", data?.buyerTraderName],
+            ["जी.एस.टी. पंजीयन क्रमांक", data?.gstNumber],
+            ["मान नंबर", data?.buyerManNumber],
+            ["गंतव्य स्थान", data?.destinationPlace],
+            ["डिलीवरी क्रेता व्यापारी", data?.deliveryTrader],
+            ["गंतव्य जी.एस.टी.", data?.destinationGST],
+            ["गंतव्य मान नंबर", data?.destinationManNumber]
+          ])}
+
+          <View style={styles.footer}>
+            <Text>यह कम्प्यूटर द्वारा जनरेट किया गया दस्तावेज है और इस पर हस्ताक्षर की आवश्यकता नहीं है।</Text>
+          </View>
         </View>
       </Page>
     </Document>
@@ -111,25 +189,26 @@ const HindiDocument = ({ data }) => {
 
 const PDFViewerComponent = ({ data }) => {
   return (
-    <>
-      <div className="pdf-viewer">
-        <PDFViewer width="100%" height="700px">
+    <div className="flex flex-col gap-4">
+      <div className="w-full" style={{ height: "800px" }}>
+        <PDFViewer style={{ width: "100%", height: "100%" }}>
           <HindiDocument data={data} />
         </PDFViewer>
       </div>
 
-      <div className="download-button">
+      <div className="text-center">
         <PDFDownloadLink
           document={<HindiDocument data={data} />}
           fileName="anugya-patra.pdf"
-          className="download-link"
+          className="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90"
         >
           {({ blob, url, loading, error }) =>
-            loading ? "PDF Loading..." : "Download PDF"
+            loading ? "Loading document..." : "Download PDF"
           }
         </PDFDownloadLink>
       </div>
-    </>
+    </div>
   );
 };
+
 export default PDFViewerComponent;

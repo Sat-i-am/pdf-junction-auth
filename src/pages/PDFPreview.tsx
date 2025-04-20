@@ -9,6 +9,7 @@ import Layout from "@/components/Layout";
 import { toast } from "@/components/ui/use-toast";
 import { format } from "date-fns";
 import PDFViewerComponent from "@/components/PDFViewerComponent";
+
 const PDFPreview = () => {
   const { id } = useParams();
   const { t } = useLanguage();
@@ -31,14 +32,6 @@ const PDFPreview = () => {
       }
     }
   }, [id, getDocument, navigate]);
-
-  async function handleDownload() {
-    // In a real app, this would generate and download a PDF
-    toast({
-      title: "Success",
-      description: "PDF downloaded successfully",
-    });
-  }
 
   const formatDate = (dateString: string) => {
     try {
@@ -83,7 +76,31 @@ const PDFPreview = () => {
             </Button>
           </div>
         </div>
-        <PDFViewerComponent data={documentData} />
+        
+        <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <p className="text-sm text-gray-500">Permit Number</p>
+              <p className="font-medium">{documentData.permitNumber}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Crop Name</p>
+              <p className="font-medium">{documentData.cropName}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Created On</p>
+              <p className="font-medium">{formatDate(documentData.createdAt)}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Last Updated</p>
+              <p className="font-medium">{formatDate(documentData.updatedAt)}</p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="bg-white rounded-lg shadow-md p-4" style={{ height: "calc(100vh - 300px)", minHeight: "800px" }}>
+          <PDFViewerComponent data={documentData} />
+        </div>
       </div>
     </Layout>
   );

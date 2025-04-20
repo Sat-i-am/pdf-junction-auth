@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -58,6 +57,13 @@ const PDFGenerator = () => {
     address: "",
     date: new Date().toISOString().split("T")[0],
     content: "",
+    marketFeeDetails: "",
+    purposeOfTransport: "",
+    districtState: "",
+    destinationPlace: "",
+    deliveryTrader: "",
+    destinationGST: "",
+    destinationManNumber: "",
   });
 
   useEffect(() => {
@@ -100,6 +106,13 @@ const PDFGenerator = () => {
           address: document.address,
           date: document.date,
           content: document.content,
+          marketFeeDetails: document.marketFeeDetails || "",
+          purposeOfTransport: document.purposeOfTransport || "",
+          districtState: document.districtState || "",
+          destinationPlace: document.destinationPlace || "",
+          deliveryTrader: document.deliveryTrader || "",
+          destinationGST: document.destinationGST || "",
+          destinationManNumber: document.destinationManNumber || "",
         });
       } else {
         toast({
@@ -130,17 +143,21 @@ const PDFGenerator = () => {
     }
   };
 
-  const handleGeneratePDF = () => {
+  const handleGeneratePDF = async () => {
     try {
-      // For demo purposes, we'll just show toast and navigate to preview
-      // In a real app, this would generate and download a PDF
+      let docId;
+      
+      // First save the document data
       if (isEditMode) {
-        updateDocument(id, formData);
+        const updatedDoc = await updateDocument(id, formData);
+        docId = updatedDoc.id;
       } else {
-        createDocument(formData).then(doc => {
-          navigate(`/pdf-preview/${doc.id}`);
-        });
+        const newDoc = await createDocument(formData);
+        docId = newDoc.id;
       }
+      
+      // Navigate to the preview page
+      navigate(`/pdf-preview/${docId}`);
       
       toast({
         title: "Success",
