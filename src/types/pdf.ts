@@ -3,6 +3,7 @@ export interface PDFDocument {
   userId: string;
   title: string;
   permitNumber: string;
+  place: string;
   cropName: string;
   vehicleType: string;
   vehicleNumber: string;
@@ -23,10 +24,10 @@ export interface PDFDocument {
   returnReason: string;
   remainingStockWeight: number;
   buyerTraderName: string;
-  buyerManNumber: string;
-  marketCommittee: string;
   gstNumber: string;
   marketDistrict: string;
+  marketCommittee: string;
+  districtState: string;
   marketPlace: string;
   issueDate: string;
   issueTime: string;
@@ -38,11 +39,10 @@ export interface PDFDocument {
   content: string;
   marketFeeDetails: string;
   purposeOfTransport: string;
-  districtState: string;
-  destinationPlace: string;
-  deliveryTrader: string;
-  destinationGST: string;
-  destinationManNumber: string;
+  // Delivery Trader Information
+  deliveryTraderName: string;
+  deliveryGSTNumber: string;
+  deliveryManNumber: string;
   createdAt: string;
   updatedAt: string;
 }

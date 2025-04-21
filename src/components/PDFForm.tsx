@@ -71,6 +71,17 @@ const PDFForm = ({ formData, onChange }: PDFFormProps) => {
               required
             />
           </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="place">स्थान (Place)</Label>
+            <Input
+              id="place"
+              name="place"
+              value={formData.place}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
         </CardContent>
       </Card>
 
@@ -336,11 +347,11 @@ const PDFForm = ({ formData, onChange }: PDFFormProps) => {
         </CardContent>
       </Card>
 
-      {/* Buyer Information */}
+      {/* Buyer/Trader Information */}
       <Card>
         <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6">
           <div className="space-y-2">
-            <Label htmlFor="buyerTraderName">क्रेता व्यापारी / फर्म का नाम (Buyer/Trader Name)</Label>
+            <Label htmlFor="buyerTraderName">क्रेता व्यापारी / फर्म / स्थान,जहाँ कृषि उपज (विक्रय/प्रोसेसिंग) के उद्देश्य से ले जायी जाती है का नाम (Buyer/Trader/Firm Name)</Label>
             <Input
               id="buyerTraderName"
               name="buyerTraderName"
@@ -351,7 +362,7 @@ const PDFForm = ({ formData, onChange }: PDFFormProps) => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="gstNumber">जी.एस.टी. पंजीयन क्रमांक (GST Number)</Label>
+            <Label htmlFor="gstNumber">जी.एस.टी. पंजीयन क्रमांक (GST Registration Number)</Label>
             <Input
               id="gstNumber"
               name="gstNumber"
@@ -362,18 +373,18 @@ const PDFForm = ({ formData, onChange }: PDFFormProps) => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="buyerManNumber">मान नंबर (Man Number)</Label>
+            <Label htmlFor="manNumber">मान नंबर (Man Number)</Label>
             <Input
-              id="buyerManNumber"
-              name="buyerManNumber"
-              value={formData.buyerManNumber}
+              id="manNumber"
+              name="manNumber"
+              value={formData.manNumber}
               onChange={handleInputChange}
               required
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="marketDistrict">मंडी समिति का जिला (Market District)</Label>
+            <Label htmlFor="marketDistrict">मंडी समिति का जिला (Market Committee District)</Label>
             <Input
               id="marketDistrict"
               name="marketDistrict"
@@ -395,7 +406,7 @@ const PDFForm = ({ formData, onChange }: PDFFormProps) => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="districtState">जिला / प्रदेश (District/State)</Label>
+            <Label htmlFor="districtState">जिला/प्रदेश (District/State)</Label>
             <Input
               id="districtState"
               name="districtState"
@@ -407,48 +418,37 @@ const PDFForm = ({ formData, onChange }: PDFFormProps) => {
         </CardContent>
       </Card>
 
-      {/* Destination Information */}
+      {/* Destination/Delivery Information */}
       <Card>
         <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6">
           <div className="space-y-2">
-            <Label htmlFor="destinationPlace">गंतव्य स्थान (Destination Place)</Label>
+            <Label htmlFor="deliveryTraderName">गंतव्य / डिलीवरी क्रेता व्यापारी / फर्म / स्थान जहाँ कृषि उपज (विक्रय / प्रोसेसिंग) के उद्देश्य से भेजी जाना है का नाम (Delivery Trader/Firm Name)</Label>
             <Input
-              id="destinationPlace"
-              name="destinationPlace"
-              value={formData.destinationPlace}
+              id="deliveryTraderName"
+              name="deliveryTraderName"
+              value={formData.deliveryTraderName}
               onChange={handleInputChange}
               required
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="deliveryTrader">डिलीवरी क्रेता व्यापारी / फर्म (Delivery Trader/Firm)</Label>
+            <Label htmlFor="deliveryGSTNumber">जी.एस.टी. पंजीयन क्रमांक (GST Registration Number)</Label>
             <Input
-              id="deliveryTrader"
-              name="deliveryTrader"
-              value={formData.deliveryTrader}
+              id="deliveryGSTNumber"
+              name="deliveryGSTNumber"
+              value={formData.deliveryGSTNumber}
               onChange={handleInputChange}
               required
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="destinationGST">जी.एस.टी. पंजीयन (GST Registration)</Label>
+            <Label htmlFor="deliveryManNumber">मान नंबर (Man Number)</Label>
             <Input
-              id="destinationGST"
-              name="destinationGST"
-              value={formData.destinationGST}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="destinationManNumber">मान नंबर (Man Number)</Label>
-            <Input
-              id="destinationManNumber"
-              name="destinationManNumber"
-              value={formData.destinationManNumber}
+              id="deliveryManNumber"
+              name="deliveryManNumber"
+              value={formData.deliveryManNumber}
               onChange={handleInputChange}
               required
             />

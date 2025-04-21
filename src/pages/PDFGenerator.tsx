@@ -24,6 +24,7 @@ const PDFGenerator = () => {
   const [formData, setFormData] = useState<PDFFormData>({
     title: "",
     permitNumber: "",
+    place: "",
     cropName: "",
     vehicleType: "",
     vehicleNumber: "",
@@ -73,6 +74,7 @@ const PDFGenerator = () => {
         setFormData({
           title: document.title,
           permitNumber: document.permitNumber || "",
+          place: document.place || "",
           cropName: document.cropName || "",
           vehicleType: document.vehicleType || "",
           vehicleNumber: document.vehicleNumber || "",
