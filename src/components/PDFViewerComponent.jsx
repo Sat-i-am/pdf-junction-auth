@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     padding: "10 5",
     width: "100%",
     maxWidth: "100%",
+    marginBottom: 40,
   },
   topText: {
     textAlign: "center",
@@ -142,6 +143,49 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     paddingLeft: 5,
   },
+  footer: {
+    position: 'absolute',
+    bottom: 80,
+    left: 0,
+    right: 0,
+    textAlign: 'center',
+    fontSize: 8,
+  },
+  footerLink: {
+    position: 'absolute',
+    bottom: 30,
+    left: 48,
+    fontSize: 8,
+  },
+  pageNumber: {
+    position: 'absolute',
+    bottom: 30,
+    right: 48,
+    fontSize: 8,
+  },
+  footerContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  footerLine: {
+    borderBottom: '1pt solid black',
+    marginBottom: 15,
+    marginLeft: 40,
+    marginRight: 40,
+  },
+  nicText: {
+    textAlign: 'center',
+    fontSize: 8,
+    marginBottom: 10,
+  },
+  footerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 48,
+    marginBottom: 30,
+  },
 });
 
 const HindiDocument = ({ data }) => {
@@ -180,7 +224,7 @@ const HindiDocument = ({ data }) => {
 
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
+      <Page size={[595.28, 950]} style={styles.page}>
         <View style={styles.container}>
           <Text style={styles.originalCopy}>मूल प्रति</Text>
           <Text style={styles.dateTime}>
@@ -246,10 +290,10 @@ const HindiDocument = ({ data }) => {
           </Text>
 
           {/* Signature section */}
-          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10, marginBottom: 10, paddingRight: 20 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 5, marginBottom: 5, paddingRight: 20 }}>
             <View style={{ alignItems: 'center' }}>
-              <Text style={{ fontSize: 10, marginBottom: 20 }}>( M/S SWASTIK FOOD PRODUCT )</Text>
-              <Text style={{ fontSize: 10, marginBottom: 5 }}>हस्ताक्षर</Text>
+              <Text style={{ fontSize: 10, marginBottom: 10 }}>( M/S SWASTIK FOOD PRODUCT )</Text>
+              <Text style={{ fontSize: 10, marginBottom: 3 }}>हस्ताक्षर</Text>
               <Text style={{ fontSize: 10 }}>(कृषि उपज के स्वामी / प्रतिनिधि के)</Text>
             </View>
           </View>
@@ -257,40 +301,58 @@ const HindiDocument = ({ data }) => {
           <View style={styles.qrCode}>
             {/* QR Code placeholder */}
           </View>
-            {/* Additional certification text */}
-          <Text style={[styles.certificationText, { marginTop: 5 }]}>
+
+          {/* Additional certification text */}
+          <Text style={[styles.certificationText, { marginTop: 3, marginBottom: 3 }]}>
             उपरोक्त कृषि उपज को मंडी प्रांगण के बाहर ले जाने की अनुमति प्रदान की जाती है। प्रमाणित किया जाता है कि जहाँ तक यह व्यापार के सार पर लागू होता है, मैंने भलीभांति जाँच कर अपने आक्याक्षर कर दिया है कि अनुज्ञप्ति में निकासी हेतु दर्शायी गई कृषि उपज का पूर्ण भुगतान विक्रेता को किया जा चुका है। तथा इस पर देय मंडी शुल्क एवं नियतिथ सहायता राशि का भुगतान प्राप्त किया जा चुका है।
           </Text>
 
           {/* Bottom details section */}
-          <View style={{ marginTop: 20, paddingLeft: 5 }}>
-            <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+          <View style={{ marginTop: 10, paddingLeft: 5 }}>
+            <View style={{ flexDirection: 'row', marginBottom: 5 }}>
               <Text style={{ fontSize: 10, width: 200 }}>स्थान:</Text>
               <Text style={[styles.boldText, { fontSize: 10 }]}>{data?.place || ""}</Text>
             </View>
 
-            <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+            <View style={{ flexDirection: 'row', marginBottom: 5 }}>
               <Text style={{ fontSize: 10, width: 200 }}>जारी करने का दिनांक एवं समय:</Text>
-              <Text style={[styles.boldText, { fontSize: 10 }]}>{new Date().toLocaleDateString('en-IN')} {new Date().toLocaleTimeString('en-IN')}</Text>
+              <Text style={[styles.boldText, { fontSize: 10 }]}>{data?.issueDate} {data?.issueTime}</Text>
             </View>
 
-            <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+            <View style={{ flexDirection: 'row', marginBottom: 5 }}>
               <Text style={{ fontSize: 10, width: 200 }}>प्रिंट दिनांक एवं समय:</Text>
-              <Text style={[styles.boldText, { fontSize: 10 }]}>{new Date().toLocaleDateString('en-IN')} {new Date().toLocaleTimeString('en-IN')}</Text>
+              <Text style={[styles.boldText, { fontSize: 10 }]}>{data?.printDate} {data?.printTime}</Text>
             </View>
           </View>
 
           {/* Market employee signature section */}
-          <View style={{ position: 'absolute', right: 20, bottom: 40, textAlign: 'center' }}>
-            <Text style={{ fontSize: 10, marginBottom: 5 }}>सक्षम मंडी कर्मचारी</Text>
+          <View style={{ position: 'absolute', right: 20, bottom: 30, textAlign: 'center' }}>
+            <Text style={{ fontSize: 10, marginBottom: 3 }}>सक्षम मंडी कर्मचारी</Text>
             <Text style={{ fontSize: 10 }}>हस्ताक्षर / सील</Text>
           </View>
 
           {/* Computer generated note */}
-          <Text style={{ fontSize: 8, textAlign: 'center', position: 'absolute', bottom: 10, left: 0, right: 0 }}>
+          <Text style={{ fontSize: 8, textAlign: 'center', marginTop: 20, marginBottom: 10 }}>
             This is Computer Generated and No signature is required.
           </Text>
         </View>
+
+        {/* Footer section with line */}
+        <View style={styles.footerContainer}>
+          <View style={styles.footerLine} />
+          <Text style={styles.nicText}>
+            NIC NIC BHOPAL(MP) © 2025-2026
+          </Text>
+          <View style={styles.footerRow}>
+            <Text style={{ fontSize: 8 }}>
+              https://eanugya.mp.gov.in/Trader.aspx
+            </Text>
+            <Text style={{ fontSize: 8 }}>
+              1/1
+            </Text>
+          </View>
+        </View>
+
       </Page>
     </Document>
   );
