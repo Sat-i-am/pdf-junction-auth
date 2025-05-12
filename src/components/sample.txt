@@ -13,8 +13,8 @@ import { PDFViewer, PDFDownloadLink } from "@react-pdf/renderer";
 
 // Register Hindi Font
 Font.register({
-  family: "Noto Sans Devanagari",
-  src: "/fonts/NotoSansDevanagari-Regular.ttf",
+  family: "Nirmala",
+  src: "/fonts/Nirmala.ttf",
 });
 
 // PDF Document Component
@@ -33,20 +33,20 @@ const HindiDocument = ({ data }) => {
     header: {
       fontSize: 12,
       textAlign: "center",
-      fontFamily: "Noto Sans Devanagari",
+      fontFamily: "Nirmala",
       marginBottom: 5,
       fontWeight: "bold",
     },
     subHeader: {
       fontSize: 12,
       textAlign: "center",
-      fontFamily: "Noto Sans Devanagari",
+      fontFamily: "Nirmala",
       fontWeight: "bold",
       marginBottom: 10,
     },
     sectionHeader: {
       fontSize: 10,
-      fontFamily: "Noto Sans Devanagari",
+      fontFamily: "Nirmala",
       marginTop: 10,
       marginBottom: 5,
     },
@@ -62,11 +62,11 @@ const HindiDocument = ({ data }) => {
     },
     label: {
       fontSize: 10,
-      fontFamily: "Noto Sans Devanagari",
+      fontFamily: "Nirmala",
     },
     value: {
       fontSize: 10,
-      fontFamily: "Noto Sans Devanagari",
+      fontFamily: "Nirmala",
       fontWeight: "bold",
     },
     signature: {
@@ -80,7 +80,7 @@ const HindiDocument = ({ data }) => {
     footer: {
       marginTop: 20,
       fontSize: 8,
-      fontFamily: "Noto Sans Devanagari",
+      fontFamily: "Nirmala",
       textAlign: "center",
     },
     topSection: {
@@ -100,7 +100,7 @@ const HindiDocument = ({ data }) => {
     },
     permitNumber: {
       fontSize: 10,
-      fontFamily: "Noto Sans Devanagari",
+      fontFamily: "Nirmala",
       marginBottom: 10,
       marginTop: 5,
       textAlign: "center",
@@ -108,7 +108,7 @@ const HindiDocument = ({ data }) => {
     boldLabel: {
       fontWeight: "bold",
       fontSize: 10,
-      fontFamily: "Noto Sans Devanagari",
+      fontFamily: "Nirmala",
     },
     formLocation: {
       flexDirection: "row",
@@ -117,7 +117,7 @@ const HindiDocument = ({ data }) => {
     },
     note: {
       fontSize: 8,
-      fontFamily: "Noto Sans Devanagari",
+      fontFamily: "Nirmala",
       marginTop: 5,
       textAlign: "justify",
       lineHeight: 1.5,
